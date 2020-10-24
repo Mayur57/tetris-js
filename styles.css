@@ -1,5 +1,5 @@
 * {
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'TT Norms', helvetica;
 }
 
 .grid {
@@ -26,8 +26,8 @@
 }
 
 .play-button {
-  background-color: #4caf50;
-  font-size: 16px;
+  background-color: #4169E1;
+  font-size: 20px;
   padding: 15px 30px;
   cursor: pointer;
 }
