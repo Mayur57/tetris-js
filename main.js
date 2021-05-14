@@ -66,6 +66,7 @@ function handleKeyPress(event) {
     if (event.keyCode === KEY.SPACE) {
       // Hard drop
       if (document.querySelector('#pause-btn').style.display === 'block') {
+          dropSound.play();
       }else{
         return;
       }
@@ -78,6 +79,7 @@ function handleKeyPress(event) {
       board.piece.hardDrop();
     } else if (board.valid(p)) {
       if (document.querySelector('#pause-btn').style.display === 'block') {
+        movesSound.play();
       }
       board.piece.move(p);
       if (event.keyCode === KEY.DOWN && 
@@ -110,6 +112,7 @@ function play() {
   animate();
   document.querySelector('#play-btn').style.display = 'none';
   document.querySelector('#pause-btn').style.display = 'block';
+  backgroundSound.play();
 }
 
 function animate(now = 0) {
@@ -134,10 +137,12 @@ function gameOver() {
 
   ctx.fillStyle = 'black';
   ctx.fillRect(1, 3, 8, 1.2);
-  ctx.font = '1px TT Norms', helvetica;
-  ctx.fillStyle = 'white';
-  ctx.fillText('Game Over!', 1.8, 4);
+  ctx.font = '1px Arial';
+  ctx.fillStyle = 'red';
+  ctx.fillText('GAME OVER', 1.8, 4);
   
+  sound.pause();
+  finishSound.play();
   checkHighScore(account.score);
 
   document.querySelector('#pause-btn').style.display = 'none';
@@ -149,6 +154,7 @@ function pause() {
     document.querySelector('#play-btn').style.display = 'none';
     document.querySelector('#pause-btn').style.display = 'block';
     animate();
+    backgroundSound.play();
     return;
   }
 
@@ -157,11 +163,12 @@ function pause() {
 
   ctx.fillStyle = 'black';
   ctx.fillRect(1, 3, 8, 1.2);
-  ctx.font = '1px TT Norms', helvetica;
-  ctx.fillStyle = 'white';
-  ctx.fillText('Paused', 3, 4);
+  ctx.font = '1px Arial';
+  ctx.fillStyle = 'yellow';
+  ctx.fillText('PAUSED', 3, 4);
   document.querySelector('#play-btn').style.display = 'block';
   document.querySelector('#pause-btn').style.display = 'none';
+  sound.pause();
 }
 
 function showHighScores() {
@@ -178,7 +185,7 @@ function checkHighScore(score) {
   const lowestScore = highScores[NO_OF_HIGH_SCORES - 1]?.score ?? 0;
 
   if (score > lowestScore) {
-    const name = prompt('Please enter your name:');
+    const name = prompt('You got a highscore! Enter name:');
     const newScore = { score, name };
     saveHighScore(newScore, highScores);
     showHighScores();
